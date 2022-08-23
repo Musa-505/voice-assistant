@@ -1,29 +1,32 @@
-import os
-import torch
+from fileinput import close
+import vosk
+import sys
 import sounddevice as sd
+import queue
+import json
 
-device = torch.device('cpu')
-torch.set_num_threads(4)
-local_file = 'model.pt'
+model = vosk.Model("model")
+samplerate = 16000
 
-if not os.path.isfile(local_file):
-    torch.hub.download_url_to_file('https://models.silero.ai/models/tts/ru/v3_1_ru.pt',
-                                            local_file)  
+q = queue.Queue()
 
-model = torch.package.PackageImporter(local_file).load_pickle("tts_models", "model")
-model.to(device)
 
-sample_rate = 48000
-speaker='baya'
-put_accent = True
-put_yo = True
+def q_callback(indata, frames, time, status):
+    if status:
+        print(status, file=sys.stderr)
+    q.put(bytes(indata))
 
-try:
-    audio = model.apply_tts(text=recon,
-    speaker=speaker,
-    sample_rate=sample_rate,
-    put_accent=put_accent,
-    put_yo=put_yo)
-    sd.play(audio, sample_rate * 1.05)
-except:
-    print("Error")
+
+def va_listen():
+    with sd.RawInputStream(samplerate=samplerate, blocksize=8000, dtype='int16',
+                           channels=1, callback=q_callback):
+
+        rec = vosk.KaldiRecognizer(model, samplerate)
+        while True:
+            data = q.get()
+            if rec.AcceptWaveform(data):
+                res = json.loads(rec.Result())
+                print (res)
+
+
+va_listen()
