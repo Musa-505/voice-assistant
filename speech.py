@@ -3,7 +3,7 @@ import sounddevice as sd
 import time
 
 def play(text):
-    device = torch.device('cuda')
+    device = torch.device('cpu')
     torch.set_num_threads(4)
     local_file = 'model.pt'
 
