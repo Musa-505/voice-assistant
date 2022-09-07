@@ -1,0 +1,9 @@
+jsons==1.6.3
+PyAudio==0.2.12
+vosk==0.3.42
+# torch
+# sounddevice
+# time
+
+# download is vosk model
+# download silero yml model

@@ -1,2 +1,0 @@
-// download is vosk model
-// download silero yml model
