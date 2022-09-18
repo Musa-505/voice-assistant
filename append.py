@@ -5,5 +5,3 @@ def audio(speack):
     engine.setProperty('voice', voices[1].id)
     engine.say(speack)
     engine.runAndWait()
-
-audio("Hello")

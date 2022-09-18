@@ -1,3 +1,4 @@
-an_cmd = ['пока', 'до свидания' 'хорошо', 'давай']
-an_grad = ['здравствуйте', 'о привет']
+an_cmd = ['bye', 'bye bye', 'see the soon', 'ok']
+an_grad = ['hello sir', 'o hello sir']
+wait = "Please wait to sir"
 
