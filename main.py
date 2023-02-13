@@ -19,10 +19,8 @@ for text in listen():
         say("здраствуите")
     # turtle command
     elif text == "play music":
-        ok_sir()
         os.startfile("C:\Program Files\AIMP\AIMP.exe")
     elif text == "start mission":
-        ok_sir()
         os.startfile("C:\Program Files\Oracle\VirtualBox\VirtualBox.exe")
     # elif text == "starts a web camera":
     #     ok_sir()
